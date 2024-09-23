@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hosts Status</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        td {
+            vertical-align: top;
+        }
+        .status-online {
+            color: green;
+        }
+        .status-offline {
+            color: red;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hosts Status</h1>
+        <table>
+            <tr>
+                <th>Host</th>
+                <th>OllamaHost</th>
+                <th>Status</th>
+                <th>Message</th>
+                <th>Models</th>
+                <th>Last Query Time</th>
+            </tr>
+            {% for host, data in hosts_status.items() %}
+            <tr>
+                <td>{{ data['Host'] }}</td>
+                <td>{{ data['OllamaHost'] }}</td>
+                <td class="{{ 'status-online' if data['Status'] == 'Online' else 'status-offline' }}">{{ data['Status'] }}</td>
+                <td>{{ data['Message'] }}</td>
+                <td>{{ ', '.join(data['Models']) }}</td>
+                <td>{{ data['LastQueryTime'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
