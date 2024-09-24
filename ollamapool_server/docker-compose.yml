@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  entitystoreapi:
+    image: datawx/ollamapool_server
+    restart: always
+    environment:
+      - EndPoint_Queries=$EndPoint_Queries
+      - EndPoint_Results=$EndPoint_Results
+      - EndPoint_NodeStatus=$EndPoint_NodeStatus
+    networks:
+      - op_network
+networks:
+  op_network:
+    driver: bridge
