@@ -2,11 +2,11 @@ version: '3.8'
 services:
   entitystoreapi:
     image: datawx/ollamapool_server
-    restart: always
     environment:
-      - EndPoint_Queries=$EndPoint_Queries
-      - EndPoint_Results=$EndPoint_Results
-      - EndPoint_NodeStatus=$EndPoint_NodeStatus
+      - ENDPOINT_QUERIES=${ENDPOINT_QUERIES}
+      - ENDPOINT_RESULTS=${ENDPOINT_RESULTS}
+      - ENDPOINT_NODESTATUS=${ENDPOINT_NODESTATUS}
+      - OLLAMA_HOST=${OLLAMA_HOST}
     networks:
       - op_network
 networks:

@@ -10,10 +10,10 @@ import signal
 
 #--------------------------------------------------------------------------------------------------
 #Environment Variables
-EndPoint_Queries=os.environ.get('EndPoint_Queries')
-Endpoint_Results=os.environ.get('Endpoint_Results')
-EndPoint_NodeStatus=os.environ.get('EndPoint_NodeStatus')
-OLLAMA_Host=os.environ.get('OLLAMA_Host')
+ENDPOINT_QUERIES=os.environ.get('ENDPOINT_QUERIES')
+ENDPOINT_RESULTS=os.environ.get('ENDPOINT_RESULTS')
+ENDPOINT_NODESTATUS=os.environ.get('ENDPOINT_NODESTATUS')
+OLLAMA_HOST=os.environ.get('OLLAMA_HOST')
 #--------------------------------------------------------------------------------------------------
 
 def get_queue_name_from_connection_string(connection_string):
@@ -26,32 +26,32 @@ def get_queue_name_from_connection_string(connection_string):
     return None
 
 #Assert if the environment variables are set
-if EndPoint_Queries is None:
-    raise ValueError("EndPoint_Queries is not set")
-if Endpoint_Results is None:
-    raise ValueError("Endpoint_Results is not set")
-if EndPoint_NodeStatus is None:
-    raise ValueError("EndPoint_NodeStatus is not set")
-if OLLAMA_Host is None:
-    raise ValueError("Ollama_Host is not set")
+if ENDPOINT_QUERIES is None:
+    raise ValueError("ENDPOINT_QUERIES is not set")
+if ENDPOINT_RESULTS is None:
+    raise ValueError("ENDPOINT_RESULTS is not set")
+if ENDPOINT_NODESTATUS is None:
+    raise ValueError("ENDPOINT_NODESTATUS is not set")
+if OLLAMA_HOST is None:
+    raise ValueError("OLLAMA_HOST is not set")
 print("Environment Variables are set OK")
 
 #Get the queue names from the connection strings
-QueueName_Queries = get_queue_name_from_connection_string(EndPoint_Queries) 
-QueueName_Results = get_queue_name_from_connection_string(Endpoint_Results)
-QueueName_NodeStatus = get_queue_name_from_connection_string(EndPoint_NodeStatus)
+QueueName_Queries = get_queue_name_from_connection_string(ENDPOINT_QUERIES) 
+QueueName_Results = get_queue_name_from_connection_string(ENDPOINT_RESULTS)
+QueueName_NodeStatus = get_queue_name_from_connection_string(ENDPOINT_NODESTATUS)
 
 #--------------------------------------------------------------------------------------------------
 #Startup / Main loop
 #--------------------------------------------------------------------------------------------------
 
-node=NodeStatus(OLLAMA_Host,QueueName_NodeStatus,EndPoint_NodeStatus)
+node=NodeStatus(OLLAMA_HOST,QueueName_NodeStatus,ENDPOINT_NODESTATUS)
 print("Checking Ollama Server Connection...")
 if not node.Connect():
     print("Error Connecting to Ollama Server")
     exit(1)
 
-llmserver=LLMRequestServer(node,Endpoint_Results,QueueName_Results)
+llmserver=LLMRequestServer(node,ENDPOINT_RESULTS,QueueName_Results)
 running=True
 
 def handle_signal(signal_number, frame):
@@ -64,7 +64,7 @@ signal.signal(signal.SIGINT, handle_signal)
 signal.signal(signal.SIGTERM, handle_signal)
 
 #Main Message Handling Loop
-servicebus_client = ServiceBusClient.from_connection_string(conn_str=EndPoint_Queries)
+servicebus_client = ServiceBusClient.from_connection_string(conn_str=ENDPOINT_QUERIES)
 
 def receive_messages_from_queue(node:NodeStatus):
     # Create a receiver for the queue

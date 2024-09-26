@@ -10,10 +10,10 @@
 	},
 
     "remoteEnv": {
-        "EndPoint_Queries": "${localEnv:EndPoint_Queries}",
-		"Endpoint_Results": "${localEnv:Endpoint_Results}",
-		"EndPoint_NodeStatus": "${localEnv:EndPoint_NodeStatus}",
-		"OLLAMA_Host": "${localEnv:OLLAMA_Host}"
+        "ENDPOINT_QUERIES": "${localEnv:ENDPOINT_QUERIES}",
+		"ENDPOINT_RESULTS": "${localEnv:ENDPOINT_RESULTS}",
+		"ENDPOINT_NODESTATUS": "${localEnv:ENDPOINT_NODESTATUS}",
+		"OLLAMA_HOST": "${localEnv:OLLAMA_HOST}"
     }
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
